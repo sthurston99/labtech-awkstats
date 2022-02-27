@@ -1,0 +1,23 @@
+#! /bin/awk -f
+/[0-9]+/{
+    if ($0 != 0 &&  NF == 1){
+	if ($0 !~ /[A-Za-z]/){
+	    sum+= $0  
+	    count++
+	    if(NR == 1 || $0 > max) { max = $0 }
+	    if(NR == 1 || $0 < min) { min = $0 }
+	}
+    } else if ($0 == 0){
+	exit(0)
+    }
+}
+
+END{
+    printf("# items: %lu \n", count)
+    if(count > 0){ 
+    	printf("Sum: %lf \n", sum)
+    	printf("Maximum: %lf \n", max)
+    	printf("Minimum: %lf \n", min)
+    	printf("Mean: %lf \n", sum/count)
+    }
+}
